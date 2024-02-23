@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Articles.Models.Article>
+
+@{
+    ViewBag.Title = "Article";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<div class="container">
+    <div class="d-flex align-items-center gap-3">
+        <button class="textlink btn btn-primary" onclick="window.location.href='@Url.Action("Create", "Article")'">
+            Store
+        </button>
+        <button class="btn btn-primary" onclick="window.location.href='@Url.Action("ExportToExcel", "Article")'">Export</button>
+    </div>
+</div>
+
+<style>
+</style>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.ActionLink("Rate", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
