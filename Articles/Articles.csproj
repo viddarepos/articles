@@ -331,6 +331,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Article\Index.cshtml" />
     <Content Include="Views\Article\ArticleForm.cshtml" />
+    <Content Include="Views\Article\Details.cshtml" />
+    <Content Include="Views\Article\EditForm.cshtml" />
+    <Content Include="Views\Article\Rating.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -63,7 +63,9 @@ namespace Articles.Controllers
         {
             ArticleDAO articleDAO = new ArticleDAO();
 
-            articleDAO.Update(article);
+            var userId = articleDAO.GetIdByUsername(User.Identity.Name);
+
+            articleDAO.Update(article, userId);
 
             return View("Rating", article);
         }
@@ -81,15 +83,6 @@ namespace Articles.Controllers
         public ActionResult SearchForm()
         {
             return View("SearchForm");
-        }
-
-        public ActionResult SearchForName(string searchPhrase)
-        {
-            ArticleDAO articleDAO = new ArticleDAO();
-
-            List<Article> articles = articleDAO.SearchForName(searchPhrase);
-
-            return View("Index", articles);
         }
 
         public ActionResult ExportToExcel()

@@ -5,13 +5,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+@{
+    var username = User.Identity.Name;
+
+    Articles.Data.ArticleDAO dao = new Articles.Data.ArticleDAO();
+
+    var user = dao.GetIdByUsername(username);
+}
 
 <div class="container">
-    <div class="d-flex align-items-center gap-3">
-        <button class="textlink btn btn-primary" onclick="window.location.href='@Url.Action("Create", "Article")'">
-            Store
-        </button>
+    <div class="d-flex justify-content-between">
+        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+        {
+            <button class="textlink btn btn-primary" onclick="window.location.href='@Url.Action("Create", "Article")'">Store</button>
+        }
         <button class="btn btn-primary" onclick="window.location.href='@Url.Action("ExportToExcel", "Article")'">Export</button>
     </div>
 </div>
@@ -48,13 +55,30 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.Rating)
+               @{ 
+                 var n=  dao.GetRatingByUserId(user, item.ID);
+                 <span>@n</span>
+               }
             </td>
             <td>
-                @Html.ActionLink("Rate", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
+                {
+                    <button class="btn btn-primary" onclick="window.location.href='@Url.Action("Edit", "Article", new { id = item.ID })'">Rate</button>
+
+                }
+
+                <button class="btn btn-success" onclick="window.location.href='@Url.Action("Details", "Article", new { id = item.ID })'">Details</button>
+
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <button class="btn btn-primary" onclick="window.location.href='@Url.Action("Edit", "Article", new { id = item.ID })'">Edit</button>
+                    <button class="btn btn-danger" onclick="window.location.href='@Url.Action("Delete", "Article", new { id = item.ID })'">Delete</button>
+
+                }
+
+
             </td>
         </tr>
     }

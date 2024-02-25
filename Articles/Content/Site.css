@@ -3,6 +3,7 @@
     margin-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
+
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -18,3 +19,22 @@ select,
 textarea {
     max-width: 280px;
 }
+
+body {
+    background-color: #8E7AB5;
+}
+
+
+.navbar {
+    background-color: #B784B7;
+    color:white;
+}
+
+th, td, button, h2, a, li {
+    color: #FFFFFF;
+}
+
+
+
+
+
