@@ -17,14 +17,11 @@
     <div class="d-flex justify-content-between">
         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
         {
-            <button class="textlink btn btn-primary" onclick="window.location.href='@Url.Action("Create", "Article")'">Store</button>
+            <button class="textlink btn btn-primary" onclick="window.location.href='@Url.Action("Create", "Article")'">Add</button>
         }
         <button class="btn btn-primary" onclick="window.location.href='@Url.Action("ExportToExcel", "Article")'">Export</button>
     </div>
 </div>
-
-<style>
-</style>
 
 <table class="table">
     <tr>

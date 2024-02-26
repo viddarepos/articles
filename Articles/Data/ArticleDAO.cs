@@ -19,7 +19,7 @@ namespace Articles.Data
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT Rating FROM dbo.UserArtRat WHERE userId = @userId AND articleId = @articleId";
+                string query = "SELECT Rating FROM dbo.UserArticleRating WHERE userId = @userId AND articleId = @articleId";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.Add("@userId", System.Data.SqlDbType.NVarChar).Value = userId;
@@ -91,7 +91,6 @@ namespace Articles.Data
                         article.Name = reader.GetString(1);
                         article.Category = reader.GetString(2);
                         article.Price = reader.GetDecimal(3);
-                        article.Rating = reader.GetInt32(4);
 
                         articles.Add(article);
                     }
@@ -126,7 +125,6 @@ namespace Articles.Data
                         article.Name = reader.GetString(1);
                         article.Category = reader.GetString(2);
                         article.Price = reader.GetDecimal(3);
-                        article.Rating = reader.GetInt32(4);
                     }
                 }
                 return article;
@@ -140,13 +138,12 @@ namespace Articles.Data
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "INSERT INTO dbo.Articles VALUES(@Name, @Category, @Price, @Rating)";
+                string query = "INSERT INTO dbo.Articles VALUES(@Name, @Category, @Price)";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.Add("@Name", System.Data.SqlDbType.VarChar, 100).Value = article.Name;
                 command.Parameters.Add("@Category", System.Data.SqlDbType.VarChar, 100).Value = article.Category;
                 command.Parameters.Add("@Price", System.Data.SqlDbType.Decimal, 100).Value = article.Price;
-                command.Parameters.Add("@Rating", System.Data.SqlDbType.Int, 100).Value = article.Rating;
 
                 connection.Open();
 
@@ -161,34 +158,34 @@ namespace Articles.Data
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string queryProvera = "SELECT * FROM dbo.UserArtRat WHERE articleId = @articleId AND userId = @userId";
+                string queryCheck = "SELECT * FROM dbo.UserArticleRating WHERE articleId = @articleId AND userId = @userId";
 
-                SqlCommand komandaProvera = new SqlCommand(queryProvera, connection);
-                komandaProvera.Parameters.Add("@userId", System.Data.SqlDbType.NVarChar, 100).Value = userId;
-                komandaProvera.Parameters.Add("@articleId", System.Data.SqlDbType.Int).Value = article.ID;
+                SqlCommand commandCheck = new SqlCommand(queryCheck, connection);
+                commandCheck.Parameters.Add("@userId", System.Data.SqlDbType.NVarChar, 100).Value = userId;
+                commandCheck.Parameters.Add("@articleId", System.Data.SqlDbType.Int).Value = article.ID;
 
                 connection.Open();
 
-                SqlDataReader citac = komandaProvera.ExecuteReader();
+                SqlDataReader reader = commandCheck.ExecuteReader();
 
-                if (citac.HasRows)
+                if (reader.HasRows)
                 {
-                    citac.Close();
+                    reader.Close();
 
                     return -1;
                 }
                 else
                 {
-                    citac.Close();
+                    reader.Close();
 
-                    string queryUnos = "INSERT INTO dbo.UserArtRat (userId, articleId, Rating) VALUES (@userId, @articleId, @Rating)";
+                    string query = "INSERT INTO dbo.UserArticleRating (userId, articleId, Rating) VALUES (@userId, @articleId, @Rating)";
 
-                    SqlCommand komandaUnos = new SqlCommand(queryUnos, connection);
-                    komandaUnos.Parameters.Add("@userId", System.Data.SqlDbType.NVarChar, 100).Value = userId;
-                    komandaUnos.Parameters.Add("@articleId", System.Data.SqlDbType.Int).Value = article.ID;
-                    komandaUnos.Parameters.Add("@Rating", System.Data.SqlDbType.Int).Value = article.Rating;
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.Add("@userId", System.Data.SqlDbType.NVarChar, 100).Value = userId;
+                    command.Parameters.Add("@articleId", System.Data.SqlDbType.Int).Value = article.ID;
+                    command.Parameters.Add("@Rating", System.Data.SqlDbType.Int).Value = article.Rating;
 
-                    return komandaUnos.ExecuteNonQuery();
+                    return command.ExecuteNonQuery();
                 }
             }
         }
