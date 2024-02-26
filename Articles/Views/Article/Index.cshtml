@@ -53,16 +53,38 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
 
-            <td>
-               @{ 
-                 var n=  dao.GetRatingByUserId(user, item.ID);
-                 <span>@n</span>
-               }
-            </td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    Average rating of this article:
+                    @{
+                        // Računanje prosečne ocene za ovaj artikal
+                        var averageRating = dao.GetAverageRatingForArticle(item.ID); // Konvertujemo item.ID u string
+                        if (averageRating != null)
+                        {
+                            <span>@averageRating</span>
+                        }
+                        else
+                        {
+                            <span>No ratings yet for this article.</span>
+                        }
+                    }
+                </td>
+            }
+            else
+            {
+                <td>
+                    @{
+                        var n = dao.GetRatingByUserId(user, item.ID);
+                        <span>@n</span>
+                    }
+                </td>
+            }
+
             <td>
                 @if (User.Identity.IsAuthenticated && !User.IsInRole("Admin"))
                 {
-                    <button class="btn btn-primary" onclick="window.location.href='@Url.Action("Edit", "Article", new { id = item.ID })'">Rate</button>
+                    <button class="btn btn-primary" onclick="window.location.href='@Url.Action("Rate", "Article", new { id = item.ID })'">Rate</button>
 
                 }
 
@@ -70,7 +92,7 @@
 
                 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                 {
-                    <button class="btn btn-primary" onclick="window.location.href='@Url.Action("Edit", "Article", new { id = item.ID })'">Edit</button>
+                    <button class="btn btn-primary" onclick="window.location.href='@Url.Action("EditArticle", "Article", new { id = item.ID })'">Edit</button>
                     <button class="btn btn-danger" onclick="window.location.href='@Url.Action("Delete", "Article", new { id = item.ID })'">Delete</button>
 
                 }

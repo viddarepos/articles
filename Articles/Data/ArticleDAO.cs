@@ -3,6 +3,7 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -14,12 +15,12 @@ namespace Articles.Data
 
         private string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=aspnet-Articles-20240223013831;Integrated Security=True;Connect Timeout=30;";
 
-        //getting rating by UserId
+        //Getting rating by UserId
         public int GetRatingByUserId(string userId, int articleId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT Rating FROM dbo.UserArticleRating WHERE userId = @userId AND articleId = @articleId";
+                string query = "SELECT Rating FROM dbo.UserArticleRating WHERE UserId = @userId AND ArticleId = @articleId";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.Add("@userId", System.Data.SqlDbType.NVarChar).Value = userId;
@@ -40,7 +41,7 @@ namespace Articles.Data
             return 0;
         }
 
-        //getting userId by username
+        //Getting userId by username
         public string GetIdByUsername(string username)
         {
 
@@ -132,6 +133,31 @@ namespace Articles.Data
 
         }
 
+        // Calculates the average rating for a specific article.
+        public double? GetAverageRatingForArticle(int articleId)
+        {
+            double? averageRating = null;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT CAST(AVG(CAST(Rating AS DECIMAL(10, 2))) AS DECIMAL(10, 2)) FROM dbo.UserArticleRating WHERE ArticleId = @articleId";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.Add("@articleId", SqlDbType.Int).Value = articleId;
+
+                connection.Open();
+
+                var result = command.ExecuteScalar();
+
+                if (result != DBNull.Value && result != null)
+                {
+                    averageRating = Convert.ToDouble(result);
+                }
+            }
+
+            return averageRating;
+        }
+
         // Store Article in database
         public int Create(Article article)
         {
@@ -154,6 +180,7 @@ namespace Articles.Data
 
         }
 
+        // Updates the rating of an article by a specific user.
         public int Update(Article article, string userId)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -190,6 +217,30 @@ namespace Articles.Data
             }
         }
 
+        //Updating the article
+        public int UpdateArticle(Article article)
+        {
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE dbo.Articles SET Name = @Name, Category = @Category, Price = @Price WHERE Id = @Id";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.Add("@Id", System.Data.SqlDbType.VarChar, 100).Value = article.ID;
+                command.Parameters.Add("@Name", System.Data.SqlDbType.VarChar, 100).Value = article.Name;
+                command.Parameters.Add("@Category", System.Data.SqlDbType.VarChar, 100).Value = article.Category;
+                command.Parameters.Add("@Price", System.Data.SqlDbType.Decimal, 100).Value = article.Price;
+
+                connection.Open();
+
+                int newId = command.ExecuteNonQuery();
+
+                return newId;
+            }
+
+        }
+
+        //Deleting the aricle
         internal int Delete(int id)
         {
 

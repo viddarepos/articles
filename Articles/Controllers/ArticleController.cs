@@ -13,7 +13,7 @@ namespace Articles.Controllers
 {
     public class ArticleController : Controller
     {
-        // GET: Article
+     
         public ActionResult Index()
         {
             List<Article> articles = new List<Article>();
@@ -27,7 +27,7 @@ namespace Articles.Controllers
 
         public ActionResult Details(int id)
         {
-            ArticleDAO articleDAO = new ArticleDAO(); // wihtout DP to make it as simple as possible
+            ArticleDAO articleDAO = new ArticleDAO(); 
 
             Article article = articleDAO.GetById(id);
 
@@ -39,7 +39,6 @@ namespace Articles.Controllers
             return View("ArticleForm");
         }
 
-
         public ActionResult ProccesCreate(Article article)
         {
             ArticleDAO articleDAO = new ArticleDAO();
@@ -49,12 +48,11 @@ namespace Articles.Controllers
             return View("Details", article);
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Rate(int id)
         {
             ArticleDAO articleDAO = new ArticleDAO();
 
             Article article = articleDAO.GetById(id);
-
 
             return View("EditForm", article);
         }
@@ -70,6 +68,24 @@ namespace Articles.Controllers
             return View("Rating", article);
         }
 
+        public ActionResult EditArticle(int id)
+        {
+            ArticleDAO articleDAO = new ArticleDAO();
+
+            Article article = articleDAO.GetById(id);
+
+            return View("ArticleUpdate", article);
+        }
+
+        public ActionResult ProccesUpdateArticle(Article article)
+        {
+            ArticleDAO articleDAO = new ArticleDAO();
+
+            articleDAO.UpdateArticle(article);
+
+            return View("Details", article);
+        }
+
         public ActionResult Delete(int id)
         {
             ArticleDAO articleDAO = new ArticleDAO();
@@ -78,11 +94,6 @@ namespace Articles.Controllers
             List<Article> articles = articleDAO.GetAll();
 
             return View("Index", articles);
-        }
-
-        public ActionResult SearchForm()
-        {
-            return View("SearchForm");
         }
 
         public ActionResult ExportToExcel()
@@ -96,8 +107,7 @@ namespace Articles.Controllers
                 ws.Cell(1, 2).Value = "Name";
                 ws.Cell(1, 3).Value = "Category";
                 ws.Cell(1, 4).Value = "Price";
-                ws.Cell(1, 5).Value = "Rating";
-                ws.Range("A1:E1").Style.Fill.BackgroundColor = XLColor.Green;
+                ws.Range("A1:D1").Style.Fill.BackgroundColor = XLColor.Green;
 
                 // Connect to database
                 System.Data.DataTable dt = new System.Data.DataTable();

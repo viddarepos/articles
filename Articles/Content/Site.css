@@ -1,9 +1,8 @@
-﻿/* Set padding to keep content from hitting the edges */
+﻿﻿ /* Set padding to keep content from hitting the edges */
 .body-content {
     margin-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
-
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -27,14 +26,78 @@ body {
 
 .navbar {
     background-color: #B784B7;
-    color:white;
+    color: white;
 }
 
 th, td, button, h2, a, li {
     color: #FFFFFF;
 }
 
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
 
+.table th,
+.table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    }
 
+.table th {
+     background-color: #B784B7;
+     font-weight: bold;
+ }
+
+.table tr:nth-child(even) {
+     background-color: #B784B7;
+ }
+
+.table tr:hover {
+     background-color: darkgray;
+ }
+
+.btn {
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.btnRate {
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.btnRate:hover {
+    color: #fff;
+    background-color: blue;
+
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #7752FE;
+    border: none;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #4D2DB7;
+}
+
+.close {
+    color: red;
+    border: none;
+}
 
 

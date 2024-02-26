@@ -8,7 +8,6 @@
 <h2>Rating of @Html.DisplayNameFor(model => model.Name) </h2>
 
 <div>
-    <h4>Article</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -20,6 +19,8 @@
         </dd>
     </dl>
 </div>
+
+<hr />
 <div>
     <button class="btn btn-primary" onclick="window.location.href='@Url.Action("Index", "Article")'">Return</button>
 </div>
