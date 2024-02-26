@@ -14,7 +14,7 @@ To get started, follow these steps:
 
 5. Once the application is running, navigate to the registration page and create a new user account. This step is necessary to initialize the database with the required tables.
 
-6. After registering a new user, open the 'database.sql' file included in the repository.
+6.After registering a new user, open the 'database.sql' file included in the repository. Import the necessary queries. Then, you can log in as an administrator using the following credentials: admin@gmail.com for the email and Admin123! for the password.
 
 7. Copy all the contents of the 'database.sql' file.
 
