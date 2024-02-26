@@ -1,4 +1,4 @@
-Welcome! This is a brief guide on how to get started with the application.
+Welcome! This is a guide on how to get started with the application.
 
 Getting Started:
 
