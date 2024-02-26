@@ -113,16 +113,10 @@ namespace Articles.Controllers
                     ws.Cell(i, 2).Value = row[1].ToString();
                     ws.Cell(i, 3).Value = row[2].ToString();
                     ws.Cell(i, 4).Value = row[3].ToString();
-                    ws.Cell(i, 5).Value = row[4].ToString();
                     i = i + 1;
                 }
 
                 i = i - 1;
-
-                //  ws.Cells("A4:E" + 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
-                //  ws.Cells("A4:E" + 1).Style.Border.TopBorder = XLBorderStyleValues.Thin;
-                //  ws.Cells("A4:E" + 1).Style.Border.LeftBorder = XLBorderStyleValues.Thin;
-                //  ws.Cells("A4:E" + 1).Style.Border.RightBorder = XLBorderStyleValues.Thin;
 
                 using (var stream = new MemoryStream())
                 {
