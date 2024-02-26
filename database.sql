@@ -1,5 +1,5 @@
 -- Creates a table named Articles with columns Id, Name, Category, and Price. Id is an auto-incrementing primary key.
-CREATE TABLE [dbo].[Articles] (
+CREATE TABLE [dbo].[Articles]  (
     [Id]       INT             IDENTITY (1, 1) NOT NULL,
     [Name]     NVARCHAR (50)   NULL,
     [Category] NVARCHAR (50)   NULL,
